@@ -12,11 +12,27 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('client.home');
-});
+Route::get('/',[\App\Http\Controllers\Client\HomeController::class,'index']);
 
 
-Route::get('/adminpanel', function () {
-    return view('admin.home');
+
+Route::prefix('/adminpanel')->group(function (){
+    Route::get('/', function () {
+        return view('Admin.home');
+    });
+
+    Route::resource('categories',\App\Http\Controllers\Admin\CategoryController::class);
+
+//    Route::get('/categories',[\App\Http\Controllers\Admin\CategoryController::class,'index'])->name('panel.categories.index');
+//
+//    Route::get('/categories/create',[\App\Http\Controllers\Admin\CategoryController::class,'create']);
+//
+//    Route::post('/categories/store',[\App\Http\Controllers\Admin\CategoryController::class,'store']);
+//
+//    Route::get('/categories/{category}/edit',[\App\Http\Controllers\Admin\CategoryController::class,'edit']);
+//
+//    Route::patch('/categories/{category}',[\App\Http\Controllers\Admin\CategoryController::class,'update'])->name('panel.categories.update');
+//
+//    Route::delete('/categories/{category}',[\App\Http\Controllers\Admin\CategoryController::class,'destroy']);
+
 });
