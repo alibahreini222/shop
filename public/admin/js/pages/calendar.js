@@ -14,13 +14,13 @@
         this.$categoryForm = $('#add-new-events form'),
         this.$extEvents = $('#external-events'),
         this.$modal = $('#my-event'),
-        this.$saveCategoryBtn = $('.save-category'),
+        this.$saveCategoryBtn = $('.save-categories'),
         this.$calendarObj = null
     };
 
 
     /* on drop */
-    CalendarApp.prototype.onDrop = function (eventObj, date) { 
+    CalendarApp.prototype.onDrop = function (eventObj, date) {
         var $this = this;
             // retrieve the dropped element's stored Event Object
             var originalEventObject = eventObj.data('eventObject');
@@ -71,8 +71,8 @@
             form.append("<div class='row'></div>");
             form.find(".row")
                 .append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Event Name</label><input class='form-control' placeholder='Insert Event Name' type='text' name='title'/></div></div>")
-                .append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Category</label><select class='form-control' name='category'></select></div></div>")
-                .find("select[name='category']")
+                .append("<div class='col-md-6'><div class='form-group'><label class='control-label'>Category</label><select class='form-control' name='categories'></select></div></div>")
+                .find("select[name='categories']")
                 .append("<option value='bg-danger'>Danger</option>")
                 .append("<option value='bg-success'>Success</option>")
                 .append("<option value='bg-purple'>Purple</option>")
@@ -87,7 +87,7 @@
                 var title = form.find("input[name='title']").val();
                 var beginning = form.find("input[name='beginning']").val();
                 var ending = form.find("input[name='ending']").val();
-                var categoryClass = form.find("select[name='category'] option:checked").val();
+                var categoryClass = form.find("select[name='categories'] option:checked").val();
                 if (title !== null && title.length != 0) {
                     $this.$calendarObj.fullCalendar('renderEvent', {
                         title: title,
@@ -95,14 +95,14 @@
                         end: end,
                         allDay: false,
                         className: categoryClass
-                    }, true);  
+                    }, true);
                     $this.$modal.modal('hide');
                 }
                 else{
                     alert('You have to give a title to your event');
                 }
                 return false;
-                
+
             });
             $this.$calendarObj.fullCalendar('unselect');
     },
@@ -136,7 +136,7 @@
         var today = new Date($.now());
 
         var defaultEvents =  [{
-                title: 'Released Ample Admin!',                
+                title: 'Released Ample Admin!',
                 start: '2017-08-08',
 				end: '2017-08-08',
                 className: 'bg-info'
@@ -146,13 +146,13 @@
                 end: today,
                 className: 'bg-danger'
             }, {
-                title: 'This is your birthday',                
+                title: 'This is your birthday',
                 start: '2017-09-08',
 				end: '2017-09-08',
                 className: 'bg-info'
             },
               {
-                title: 'Hanns birthday',                
+                title: 'Hanns birthday',
                 start: '2017-10-08',
 				end: '2017-10-08',
                 className: 'bg-danger'
@@ -166,10 +166,10 @@
         $this.$calendarObj = $this.$calendar.fullCalendar({
             slotDuration: '00:15:00', /* If we want to split day time each 15minutes */
             minTime: '08:00:00',
-            maxTime: '19:00:00',  
-            defaultView: 'month',  
-            handleWindowResize: true,   
-             
+            maxTime: '19:00:00',
+            defaultView: 'month',
+            handleWindowResize: true,
+
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -188,8 +188,8 @@
 
         //on new event
         this.$saveCategoryBtn.on('click', function(){
-            var categoryName = $this.$categoryForm.find("input[name='category-name']").val();
-            var categoryColor = $this.$categoryForm.find("select[name='category-color']").val();
+            var categoryName = $this.$categoryForm.find("input[name='categories-name']").val();
+            var categoryColor = $this.$categoryForm.find("select[name='categories-color']").val();
             if (categoryName !== null && categoryName.length != 0) {
                 $this.$extEvents.append('<div class="m-15 external-event bg-' + categoryColor + '" data-class="bg-' + categoryColor + '" style="position: relative;"><i class="fa fa-hand-o-right"></i>' + categoryName + '</div>')
                 $this.enableDrag();
@@ -200,12 +200,12 @@
 
    //init CalendarApp
     $.CalendarApp = new CalendarApp, $.CalendarApp.Constructor = CalendarApp
-    
+
 }(window.jQuery),// End of use strict
 
 //initializing CalendarApp
 function($) {
     "use strict";
     $.CalendarApp.init()
-	
+
 }(window.jQuery);// End of use strict
